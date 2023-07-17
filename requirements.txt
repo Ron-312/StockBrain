@@ -1,0 +1,6 @@
+flask
+numpy
+faiss-cpu # If you're not using GPU
+pandas
+sentence_transformers
+spacy
