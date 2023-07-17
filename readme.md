@@ -26,15 +26,16 @@ In the root directory:
 
 ## Available Endpoints:
     POST /create_db
-# This endpoint creates a vector database from a CSV file. It uses the create_vector_DB_from_csv function from the VDBfromCVS module.
+    
+This endpoint creates a vector database from a CSV file. It uses the create_vector_DB_from_csv function from the VDBfromCVS module.
 
     POST /query
 
-# This endpoint performs a semantic search to identify references to stock companies in a given text (like a tweet). It accepts a JSON payload with a field named 'text' containing the text to be analyzed. It returns a JSON response containing the matched company names and stock symbols. It primarily uses the `check_if_company_exist_in_tweet` function from the `semanticQueriesVDB` module.
+This endpoint performs a semantic search to identify references to stock companies in a given text (like a tweet). It accepts a JSON payload with a field named 'text' containing the text to be analyzed. It returns a JSON response containing the matched company names and stock symbols. It primarily uses the `check_if_company_exist_in_tweet` function from the `semanticQueriesVDB` module.
 
     POST /symbol
 
-# This endpoint is used to find the stock symbol for a given company name in the context of a certain sentence. It accepts a JSON payload with two fields: 'company_name' and 'sentence'. It returns a JSON response containing the matched stock symbol. It primarily uses the `symbol_per_company_name` function from the `semanticQueriesVDB` module.
+This endpoint is used to find the stock symbol for a given company name in the context of a certain sentence. It accepts a JSON payload with two fields: 'company_name' and 'sentence'. It returns a JSON response containing the matched stock symbol. It primarily uses the `symbol_per_company_name` function from the `semanticQueriesVDB` module.
 
 
 
