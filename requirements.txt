@@ -1,6 +1,7 @@
 flask
 numpy
-faiss-cpu # If you're not using GPU
+faiss-cpu  # If you're not using GPU
 pandas
 sentence_transformers
 spacy
+spacy[en_core_web_sm] 

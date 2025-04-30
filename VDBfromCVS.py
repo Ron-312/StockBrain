@@ -78,4 +78,45 @@ def create_vector_DB_from_csv():
     # print(matches)
 
 
-# create_vector_DB_from_csv()
+def update_vector_DB_from_csv():
+    # Load existing data
+    existing_df = pd.read_csv('./Data/nasdaq_symbols_to_name3_test.csv')
+
+    # Load new data from JSON
+    with open('./Data/nasdaq_full_tickers_test.json', 'r') as file:
+        new_data = json.load(file)
+    new_df = pd.DataFrame(new_data)
+
+    # Preprocess the "Company" column in the new data, using the same steps as in create_vector_DB_from_csv
+    preprocess_steps = {
+        'Common Stock': '', 'Class A': '', 'Class B': '', 'Class C': '',
+        'PLC': '', 'Holdings': '', 'Inc\.': '', 'Corp\.': '', 'Ltd\.': '',
+        '.com\.': '', 'Opportunity': '', 'Shares': ''
+    }
+    for key, value in preprocess_steps.items():
+        new_df['Company'] = new_df['Company'].replace(key, value, regex=True)
+    new_df['Company'] = new_df['Company'].str.strip()
+
+    # Merge data
+    # Ensure no duplicate companies in the new data based on the "Company" column
+    new_df = new_df.drop_duplicates(subset=['Company'])
+    # Create a dictionary from the new data for quick lookup
+    new_data_dict = dict(zip(new_df['Company'], new_df['Symbol']))
+    # Update or add new entries
+    for index, row in existing_df.iterrows():
+        company_name = row['Company']
+        if company_name in new_data_dict:
+            # Update symbol if company exists in new data
+            existing_df.at[index, 'Symbol'] = new_data_dict[company_name]
+            # Remove from new_data_dict to prevent re-adding it
+            del new_data_dict[company_name]
+    # Add remaining new companies to the existing dataframe
+    for company, symbol in new_data_dict.items():
+        existing_df = existing_df.append({'Company': company, 'Symbol': symbol}, ignore_index=True)
+
+    # Save updated data back to CSV
+    existing_df.to_csv('./Data/nasdaq_symbols_to_name3_test_updated.csv', index=False)
+    print("Database updated and saved to 'nasdaq_symbols_to_name3_test_updated.csv'!")
+
+# Remember to call the function to perform the update
+update_vector_DB_from_csv()

@@ -16,6 +16,28 @@ In the root directory:
 
 2. The application expects the existence of certain Python modules: `VDBfromCVS` and `semanticQueriesVDB`. Ensure they are available in your Python environment.
 
+3. Set up your environment variables:
+   - Create a `.env` file in the project root
+   - Add your Polygon.io API key: `POLYGON_API_KEY=your_api_key_here`
+
+
+
+## Data Management
+
+### Polygon.io Integration
+StockBrain uses the Polygon.io API to fetch current stock information and keep track of ticker changes:
+
+1. **Update Stock Data**:
+   ```
+   python PolygonCompanyNameMatcher.py
+   ```
+   This will fetch current stock data from Polygon.io and update your local CSV file with the latest information.
+
+2. **Features**:
+   - Tracks ticker changes (when companies change their stock symbols)
+   - Maintains historical relationships between old and new tickers
+   - Stores company names along with their symbols
+
 ## Running the Application
 
 ### Run with:
